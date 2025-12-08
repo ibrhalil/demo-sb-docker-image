@@ -1,6 +1,15 @@
 server:
   port: ${APP_PORT:8070}
 
+spring:
+  application:
+    name: sb-docker-demo
+
+logging:
+  file:
+    path: ${LOG_PATH:./ms/logs}
+
+
 management:
   endpoints:
     web:

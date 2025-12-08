@@ -22,6 +22,11 @@ WORKDIR /app
 # Default port
 ENV APP_PORT=8070
 
+# Log path
+ENV LOG_PATH=/app/logs
+RUN mkdir -p /app/logs
+VOLUME ["/app/logs"]
+
 EXPOSE ${APP_PORT}
 
 # Spring Boot layer

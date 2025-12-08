@@ -6,4 +6,6 @@ services:
     container_name: demo-sb-app
     ports:
       - "8090:8070"
+    volumes:
+      - ./ms/logs:/app/logs
     restart: always

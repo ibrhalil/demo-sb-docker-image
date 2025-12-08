@@ -4,8 +4,53 @@ services:
   app:
     image: demo-sb-docker-image:1.0.3
     container_name: demo-sb-app
+    depends_on:
+      - postgre
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgre:5432/demo
+      SPRING_DATASOURCE_USERNAME: demo
+      SPRING_DATASOURCE_PASSWORD: demo
+      APP_PORT: 8070
     ports:
       - "8090:8070"
     volumes:
       - ./ms/logs:/app/logs
     restart: always
+    networks:
+      - demo-network
+
+  postgre:
+    image: postgres:16-alpine
+    container_name: demo-postgres
+    environment:
+      POSTGRES_DB: demo
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+    ports:
+      - "5445:5432"
+    volumes:
+      - demo-db-data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - demo-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: demo-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@demo.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "50:80"
+    depends_on:
+      - postgre
+    restart: always
+    networks:
+      - demo-network
+
+volumes:
+  demo-db-data:
+
+networks:
+  demo-network:
+    driver: bridge

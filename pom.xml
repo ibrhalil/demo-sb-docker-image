@@ -7,7 +7,7 @@
 
     <groupId>com.ibrhalil</groupId>
     <artifactId>demo-sb-docker-image</artifactId>
-    <version>0.0.2</version>
+    <version>1.0.3</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -64,7 +64,7 @@
                             <arguments>
                                 <argument>build</argument>
                                 <argument>-t</argument>
-                                <argument>demo-sb-docker-image:1.0</argument>
+                                <argument>${project.artifactId}:${project.version}</argument>
                                 <argument>-f</argument>
                                 <argument>${project.basedir}/ms/docker/Dockerfile</argument>
                                 <argument>.</argument>

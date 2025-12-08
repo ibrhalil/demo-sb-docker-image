@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   app:
-    image: demo-sb-docker-image:1.0
+    image: demo-sb-docker-image:1.0.3
     container_name: demo-sb-app
     ports:
       - "8090:8070"

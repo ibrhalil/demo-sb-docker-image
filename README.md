@@ -112,3 +112,20 @@ docker compose up -d
 - Docker: http://localhost:8090/hello
 
 ---
+
+## 6. Peki çalışan container’ı güncellemek istersek?
+
+Bunu yapmak için:
+
+```bash
+docker compose down
+docker compose up -d --build
+```
+
+veya
+
+```bash
+docker stop demo-sb-app
+docker rm demo-sb-app
+docker run ...  # yeni build’i çalıştırır
+```

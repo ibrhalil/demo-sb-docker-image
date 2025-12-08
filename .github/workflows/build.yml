@@ -1,0 +1,32 @@
+name: Maven + Docker Build
+
+on:
+  push:
+    branches: [ "main", "*", "**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Kodu checkout et
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2) JDK 21 kur
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # 3) Maven build
+      - name: Build with Maven
+        run: mvn -B -DskipTests clean package
+
+      # 4) Docker image build
+      - name: Docker Build
+        run: |
+          docker build -t demo-sb-docker-image:ci -f ms/docker/Dockerfile .

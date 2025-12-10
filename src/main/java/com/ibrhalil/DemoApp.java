@@ -8,11 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @Slf4j
-public class DepoApp {
+public class DemoApp {
 
     public static void main(String[] args) {
         log.info("[*] Before run method...");
-        SpringApplication.run(DepoApp.class, args);
+        SpringApplication.run(DemoApp.class, args);
         log.info("[*] After run method...");
     }
 

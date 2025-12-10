@@ -1,11 +1,49 @@
 version: "3.9"
 
 services:
-  app:
-    image: demo-sb-docker-image:1.0.3
-    container_name: demo-sb-app
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: demo_db
+      POSTGRES_USER: demo-user
+      POSTGRES_PASSWORD: demo-password
+    ports:
+      - "5445:5432"
+    volumes:
+      - demo-db-data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U demo-user" ]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+    networks:
+      - demo-network
+
+  demo-app:
+    image: demo-sb-docker-image:1.0.5
+    container_name: demo-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/demo_db
+      SPRING_DATASOURCE_USERNAME: demo-user
+      SPRING_DATASOURCE_PASSWORD: demo-password
+      APP_PORT: 8070
     ports:
       - "8090:8070"
     volumes:
       - ./ms/logs:/app/logs
     restart: always
+    networks:
+      - demo-network
+
+volumes:
+  demo-db-data:
+
+networks:
+  demo-network:
+    driver: bridge

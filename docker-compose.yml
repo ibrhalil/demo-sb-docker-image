@@ -23,7 +23,7 @@ services:
       - demo-network
 
   demo-app:
-    image: demo-sb-docker-image:1.0.3
+    image: demo-sb-docker-image:1.0.5
     container_name: demo-app
     depends_on:
       postgres:
